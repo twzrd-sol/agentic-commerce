@@ -21,8 +21,10 @@ user_agent = "Mozilla/5.0 (compatible; lychee-link-check/0.18; +https://github.c
 # Skip URLs that are well-known to block automated checkers or are otherwise
 # unreliable to verify from CI. Each entry is a regex matched against the URL.
 exclude = [
-    # Bot-hostile hosts (return 403 to non-browser UAs, but pages are live)
+    # Bot-hostile hosts (return 403/404/502 to non-browser UAs, but pages are live)
+    "^https?://(www\\.)?amazon\\.com",
     "^https?://(www\\.)?openai\\.com",
+    "^https?://(www\\.)?tempo\\.com",
     "^https?://(www\\.)?fatf-gafi\\.org",
     "^https?://developer\\.americanexpress\\.com",
     "^https?://(www\\.)?strike\\.me",

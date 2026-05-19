@@ -50,6 +50,10 @@ A pre-settlement hold by an issuer or wallet promising that funds are available;
 
 A Layer 2 EVM rollup operated by Coinbase, the default chain for [x402](https://www.x402.org/) USDC stablecoin payments in 2026; settles to Ethereum.
 
+### Buyer agent
+
+The agent acting on a user's behalf to discover, evaluate, and pay for a resource or product. In [x402](https://www.x402.org/) it constructs the signed `X-PAYMENT` header; in [AP2](https://github.com/google-agentic-commerce/AP2) it carries a user-signed [mandate](#mandate); in [ACP](https://www.agenticcommerce.dev/) it drives the checkout exchange with the merchant. See [/agent-playbooks/x402-buyer-loop.md](../agent-playbooks/x402-buyer-loop.md).
+
 ### Buyer-loop
 
 The client-side x402 pattern: hit the resource, receive HTTP 402 with payment requirements, sign a payment payload, retry; documented in the [x402 spec](https://github.com/coinbase/x402).
@@ -109,6 +113,10 @@ Embedded SIM profile delivered as a QR code or activation URL; a digital good wi
 Euro-denominated stablecoin issued by [Circle](https://www.circle.com/eurc); used for EUR-quoted agent payments where USDC pricing would introduce FX risk.
 
 ## F
+
+### Facilitator
+
+A third-party service that verifies signed [x402](https://www.x402.org/) payment payloads and broadcasts the settlement transfer on-chain, returning a settlement proof (typically a transaction hash) in the `X-PAYMENT-RESPONSE` header. Public facilitators in 2026 include [Coinbase](https://docs.cdp.coinbase.com/x402/welcome), [Stripe-on-Base](https://docs.stripe.com/crypto/stablecoin-payments), and the [x402 Foundation](https://github.com/x402). Merchants treat the facilitator as trusted-but-verified: cross-check facilitator receipts against on-chain settlement in reconciliation.
 
 ### Finality
 
@@ -192,6 +200,10 @@ The legal seller in a transaction — handles tax, returns, and chargebacks; for
 
 The surface of agentic commerce that protocols leave to merchants: catalog, quote, pay, deliver, refund, reconcile. Where ACP / AP2 / x402 / MCP standardize the wire protocol, the merchant operations layer is everything that has to be built on top to actually transact — SKU eligibility per jurisdiction, dynamic pricing and re-quote, multi-rail settlement reconciliation, refund semantics for irreversible rails, fraud signals on agent traffic, signed receipts. See [/docs/merchant-operations-layer.md](./merchant-operations-layer.md) for the canonical page and [/merchant-playbooks/](../merchant-playbooks/) for the operational patterns.
 
+### Mock mode
+
+The default safety mode in this repo's runnable examples, gated by `MOCK_MODE=true` (the implicit default — set `MOCK_MODE=false` to disable). No real funds move, no external network calls happen in default mode, no real keys are required, and every delivery code is clearly non-redeemable (`MOCK-` / `DEMO-` prefixed). Every shortcut is annotated with `// MOCK:` in source so readers can locate the production swap-in point (an x402 [facilitator](#facilitator), an EIP-712 verifier, or a chain RPC). See [/examples/README.md](../examples/README.md).
+
 ### MPP — Machine Payments Protocol
 
 Spec from [Tempo and Stripe](https://tempo.xyz/) for machine-to-machine settlement primitives.
@@ -228,6 +240,12 @@ The airline reservation record; the unit of fulfillment for a flight purchase, g
 
 A processor that abstracts card-network or rail integration for the merchant; Stripe, Adyen, Checkout.com.
 
+## Q
+
+### Quote-vs-settle drift
+
+The variance between the total quoted to an agent at time T0 and the actual cost at settlement T1, driven by supplier wholesale repricing, [stablecoin](#stablecoin) peg deviation (USDC briefly traded near $0.88 during the March 2023 SVB event), FX between quote and settlement currencies, and chain [finality](#finality) latency. The protocols (ACP, AP2, x402, L402) do not define a TTL, a drift threshold, or a re-quote handshake — the merchant invents them. Bound it with a quote TTL, a basis-point drift threshold, and an explicit re-quote envelope; see [/merchant-playbooks/pricing-drift-and-requote.md](../merchant-playbooks/pricing-drift-and-requote.md).
+
 ## R
 
 ### Refund
@@ -239,6 +257,10 @@ A merchant-initiated reversal; in cards it is a separate clearing message, in st
 ### Scope
 
 The set of constraints attached to an agent's authorization — which merchants, which amounts, which categories, which time window. Defender framing: scope is the primary control surface for agent fraud.
+
+### Seller agent
+
+The agent (or agent-shaped service) exposing a paid resource or product to [buyer agents](#buyer-agent); serves the [x402](https://www.x402.org/) 402 challenge, an [ACP](https://www.agenticcommerce.dev/) product feed and quote endpoints, or an [MCP](https://modelcontextprotocol.io/) storefront, and verifies the buyer's signed payment payload before delivering. In [AP2](https://github.com/google-agentic-commerce/AP2) terms it is the merchant-side endpoint validating the mandate scope before settlement.
 
 ### Settlement
 

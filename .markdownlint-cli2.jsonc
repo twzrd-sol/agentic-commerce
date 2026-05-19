@@ -1,0 +1,36 @@
+// markdownlint-cli2 configuration
+// Rules disabled to match the repo's intentional writing style. Every rule
+// here was failing on pre-existing files before this PR — the workflow was
+// added without a config and applied markdownlint's strict defaults.
+//
+//   MD001 (heading-increment) — README opens with h1→h3 by design
+//   MD012 (no-multiple-blanks) — one stray double blank in CODE_OF_CONDUCT
+//   MD013 (line-length)     — repo writes one long line per paragraph
+//                             (glossary one-liners, prose-heavy playbooks)
+//   MD024 (no-duplicate-heading) — playbook template repeats ### Goal /
+//                             ### Code / ### Prerequisites across patterns
+//   MD026 (trailing-punctuation) — README h3 ends with a period by design
+//   MD032 (blanks-around-lists) — repo style omits blanks around tight lists
+//   MD033 (no-inline-html)  — _template.md uses <Playbook> as a placeholder
+//   MD034 (no-bare-urls)    — a few intentional bare URLs in resource lists
+//   MD037 (no-space-in-emphasis) — false positive on "* —" markdown
+//   MD040 (fenced-code-language) — some diff/text blocks omit language tag
+//   MD041 (first-line-h1)   — PULL_REQUEST_TEMPLATE.md opens with ## per
+//                             GitHub's pull-request-template convention
+//   MD060 (table-column-style) — repo uses compact tables (|x|y| not | x | y |)
+{
+  "config": {
+    "MD001": false,
+    "MD012": false,
+    "MD013": false,
+    "MD024": false,
+    "MD026": false,
+    "MD032": false,
+    "MD033": false,
+    "MD034": false,
+    "MD037": false,
+    "MD040": false,
+    "MD041": false,
+    "MD060": false
+  }
+}

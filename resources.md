@@ -109,6 +109,7 @@ Curated reading, viewing, listening, and tooling for agentic commerce. Every lin
 - [TronWeb](https://github.com/tronprotocol/tronweb) — Tron — JavaScript SDK for Tron, primary surface for USDT-on-Tron settlement.
 - [viem](https://viem.sh/) — wagmi/viem — TypeScript interface for EVM chains, widely used in x402 client and server libraries.
 - [Wagmi](https://wagmi.sh/) — wagmi — React hooks for Ethereum, common in agent-buyer-loop implementations.
+- [TWZRD Agent Intel](https://intel.twzrd.xyz) — TWZRD — On-chain trust scoring MCP server for Solana AI agent wallets; verify wallet identity and reputation before accepting x402 payments.
 - [x402 reference repository](https://github.com/coinbase/x402) — Coinbase — x402 spec, reference servers and clients, middleware for common frameworks.
 - [x402.org](https://www.x402.org/) — x402 Foundation — Spec hub, ecosystem registry, and developer documentation.
 
